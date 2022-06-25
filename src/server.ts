@@ -36,13 +36,18 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   	async ( req: Request, res: Response ) => {
 
 		const { image_url } = req.query;
-		let image_file = filterImageFromURL( image_url ) ;
-		return res.status(200).sendFile( await image_file, async() => await deleteLocalFiles([image_file]));
+    
+		try {
+			const image_file: string = await filterImageFromURL( image_url ) ;
+			
+			console.log(image_file)
+			res.sendFile(image_file, await deleteLocalFiles([image_file])) // await deleteLocalFiles([image_file]));
+
+		} catch (error) {
+			return res.status(422).send("the image cannot be downloaded");
+		}
 	}
 );
-
-
-
 
   
   // Root Endpoint
