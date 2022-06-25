@@ -40,11 +40,10 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 		try {
 			const image_file: string = await filterImageFromURL( image_url ) ;
 			
-			console.log(image_file)
-			res.sendFile(image_file, await deleteLocalFiles([image_file])) // await deleteLocalFiles([image_file]));
+			res.status(200).sendFile(image_file, await deleteLocalFiles([image_file])) // await deleteLocalFiles([image_file]));
 
 		} catch (error) {
-			return res.status(422).send("the image cannot be downloaded");
+			return res.status(422).send("The image can't be downloaded. Try again.");
 		}
 	}
 );
